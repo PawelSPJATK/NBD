@@ -1,0 +1,67 @@
+1
+
+match (a:Movie)
+return a
+
+2
+
+match (a:Person) -[:ACTED_IN]-> (b:Movie)
+where a.name = "Hugo Weaving"
+return b 
+
+3
+
+MATCH (name :Person {name: "Hugo Weaving"}) -[r:ACTED_IN]-> (m:Movie) <-[:DIRECTED]- (p:Person) 
+RETURN distinct p 
+
+4
+
+match (p:Person{name:"Hugo Weaving"}) -[:ACTED_IN]-> (m:Movie) <-[:ACTED_IN]-(f:Person)
+return f 
+
+5
+
+match (m:Movie) <-[:ACTED_IN]- (p:Person) -[:ACTED_IN]-> (m2:Movie)
+where m.title starts with "The Matrix"
+return m2
+
+6
+
+match (p:Person) -[a:ACTED_IN]-> ()
+with p, count(a) as cnt
+where cnt > 0
+return p.name, cnt
+
+7
+
+match (p:Person) -[:DIRECTED]-> (m:Movie)
+match (p) -[:WROTE]-> (m)
+return p.name, m.title
+
+8
+
+match (:Person {name:"Hugo Weaving"}) -[:ACTED_IN]-> (m)
+match (:Person {name:"Keanu Reeves"}) -[:ACTED_IN]-> (m)
+return m.title
+
+9
+
+Create (CA:Movie {title:"Captain America: The First Avenger", released:2011}),
+ 	(:Person {name:"Chris Evans", born:1981}) -[:ACTED_IN {roles:["Captain America","Steve Rogers"]}]-> (CA),
+	(:Person {name:"Hayley Atwell", born:1982}) -[:ACTED_IN{roles:["Peggy Carter"]}]-> (CA),
+    (:Person {name:"Sebastian Stan", born:1982}) -[:ACTED_IN{roles:["James Buchanan 'Bucky' Barnes"]}]-> (CA),
+    (:Person {name:"Tommy Lee Jones", born:1946}) -[:ACTED_IN{roles:["Colonel Chester Phillips"]}]-> (CA),
+    (:Person {name:"Hugo Weaving", born:1960}) -[:ACTED_IN{roles:["Red Skull","Johann Schmidt"]}]-> (CA),
+    (:Person {name:"Dominic Cooper", born:1978}) -[:ACTED_IN{roles:["Howard Stark"]}]-> (CA),
+    (:Person {name:"Richard Armitage", born:1971}) -[:ACTED_IN{roles:["Heinz Kruger"]}]-> (CA),
+    (:Person {name:"Stanley Tucci", born:1960}) -[:ACTED_IN{roles:["Dr. Abraham Erskine"]}]-> (CA),
+    (:Person {name:"Samuel L. Jackson", born:1948}) -[:ACTED_IN{roles:["Nick Fury"]}]-> (CA),
+    (:Person {name:"Toby Jones", born:1966}) -[:ACTED_IN{roles:["Dr. Arnim Zola"]}]-> (CA),
+    (:Person {name:"Neal McDonough", born:1966}) -[:ACTED_IN{roles:["Timothy 'Dum Dum' Dugan"]}]-> (CA),
+    (:Person {name:"Derek Luke", born:1974}) -[:ACTED_IN{roles:["Gabe Jones"]}]-> (CA),
+    (:Person {name:"Kenneth", born:1971}) -[:ACTED_IN{roles:["Choi Jim Morita"]}]-> (CA),
+    (:Person {name:"JJ Feild", born:1978}) -[:ACTED_IN{roles:["James Montgomery Falsworth"]}]-> (CA)
+
+
+match (m {title:"Captain America: The First Avenger"}) <-[:ACTED_IN]- (p)
+return *
