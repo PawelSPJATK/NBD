@@ -1,0 +1,26 @@
+1
+
+MATCH a = allShortestPaths((x{name:"Darjeeling"}) -[z*1..9]-> (y{name:"Sandakphu"}))
+return a
+
+2
+MATCH a = (x{name:"Darjeeling"}) -[z*{winter: 'true'}]-> (y{name:"Sandakphu"})
+return a
+order by length(a)
+
+3
+
+MATCH (x { name: 'Darjeeling' }), (y { name: 'Sandakphu' })
+MATCH paths = (x)-[*]->(y)
+With paths, reduce(t = 0, e IN relationships(paths)| t + e.distance) AS totalDistance 
+return paths, totalDistance
+order by totalDistance
+
+4
+
+match (a:Flight) -[:ORIGIN]-> (b)
+return b.name,count(a)
+order by count(a) desc
+
+
+
