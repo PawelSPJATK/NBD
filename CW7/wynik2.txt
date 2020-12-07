@@ -1,0 +1,1 @@
+'{nazwa:Pszeniczniak,styl:Hefeweizen,BLG:12.1,ALK:5.2}'
