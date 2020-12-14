@@ -1,0 +1,3 @@
+Added: {"nazwa": "Double India Pale Ale", "styl": "DIPA", "BLG": 18.1, "ALK": 7.5}
+Modified: {"nazwa": "Double India Pale Ale", "styl": "DIPA", "BLG": 20, "ALK": 7.5}
+Deleted: not found
